@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:ital,wght@0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-family: 'Poppins', sans-serif;
+}
+*::-webkit-scrollbar {
+  width: 13px;
+}
+::-webkit-scrollbar-track {
+  width: 2px;
+  background: #18181b;
+}
+*::-webkit-scrollbar-thumb {
+  background: #8257e6;
+  border: 2px solid #18181b;
+  border-radius: 5px;
+}
