@@ -41,7 +41,7 @@ export default function Postos() {
           </ButtonLink>
         </div>
         <div
-          className={`flex flex-1 border-2 max-w-[380px] w-full  ring-offset-1 border-bgTheme-500 transition-all ease-linear hover:border-8 hover:ring-inset hover:border-brain-500   items-center gap-3 bg-bgTheme-500 rounded-md px-5 ${
+          className={`flex flex-1 border-2 max-w-[380px] w-full  ring-offset-1 border-bgTheme-500 transition-all ease-linear hover:ring-inset hover:border-brain-500   items-center gap-3 bg-bgTheme-500 rounded-md px-5 ${
             search ? '#8257E6' : '#555555'
           }
           `}>
