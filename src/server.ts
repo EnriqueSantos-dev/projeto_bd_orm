@@ -1,7 +1,7 @@
 import { prisma, PrismaErros } from './prisma';
 import express from 'express';
 
-import { randomUUID } from 'crypto';
+import { v4 as uuid } from 'uuid';
 
 const app = express();
 app.use(express.json());
@@ -18,19 +18,25 @@ app.get('/postos/:id', async (req, res) => {
 
   try {
     const data = await prisma.posto.findUnique({
+      include: {
+        tipos_combustiveis: {
+          select: {
+            idTipo: true,
+            nome: true,
+            valor: true,
+          },
+        },
+      },
       where: {
         idPosto: id,
-      },
-      select: {
-        cnpj: true,
       },
     });
     return res.status(200).json({ data });
   } catch (error) {}
 });
 
-app.post('/gerente/create', async (req, res) => {
-  const { nome, cpf, login, senha } = req.body;
+app.post('/gerente/cadastro', async (req, res) => {
+  const { nome, cpf, login, senha, email } = req.body;
 
   try {
     const data = await prisma.gerente.create({
@@ -39,21 +45,46 @@ app.post('/gerente/create', async (req, res) => {
         cpf,
         login,
         senha,
+        email,
       },
     });
     return res.status(201).json(data);
   } catch (error) {
     if (error instanceof PrismaErros) {
-      return res.json(error.meta);
+      return error.code === 'P2002'
+        ? res.json('O cpf ou login já pertence a alguém')
+        : res.json(error.meta);
     }
   }
 });
 
+app.post('/gerente/adim', async (req, res) => {
+  const { id, nome, endereco, cnpj } = req.body;
+
+  try {
+    const data = await prisma.posto.create({
+      data: {
+        nome,
+        cnpj,
+        endereco,
+        gerenteId: id,
+      },
+    });
+    return res.status(201).json({ DadosDoPosto: data });
+  } catch (error) {
+    return res.json(error);
+  }
+});
+
 app.put('/gerente/perfil', async (req, res) => {
-  const { id, novoNome, novoCPF, imgProfile } = req.body;
+  const { id, novoNome, novoCPF } = req.body;
 
   try {
     const data = await prisma.gerente.update({
+      select: {
+        nome: true,
+        cpf: true,
+      },
       where: {
         idGerente: id,
       },
@@ -64,11 +95,31 @@ app.put('/gerente/perfil', async (req, res) => {
     });
     return res.status(200).json({
       status: 'Dados alterados com sucesso',
+      data: data,
     });
   } catch (error) {
     if (res.statusCode === 2002) {
       return res.json('Esse cpf pertence a outra pessoa');
     }
+  }
+});
+
+app.post('/gerente/create/combustivel', async (req, res) => {
+  const { nome, valor, idPosto } = req.body;
+
+  try {
+    const data = await prisma.tipo_combustivel.create({
+      select: { idTipo: true, nome: true, valor: true },
+      data: { nome, valor: parseFloat(valor), postoIdPosto: idPosto },
+    });
+    return res.status(201).json(data);
+  } catch (error) {
+    if (error instanceof PrismaErros) {
+      return error.code == 'P2002'
+        ? res.json('Esse tipo  já existe no posto')
+        : res.json(error.meta);
+    }
+    return res.json(error);
   }
 });
 
@@ -83,9 +134,12 @@ app.post('/pagamento', async (req, res) => {
         data: new Date(),
       },
     });
-    return res.status(200);
+    return res.status(200).json({ message: 'pagamento concluído' });
   } catch (error) {
-    return error;
+    return res.json({
+      error: error,
+      message: 'Deu algum problema no pagamento',
+    });
   }
 });
 
@@ -105,7 +159,7 @@ app.post('/login', async (req, res) => {
     if (data?.login === loginGerente && data?.senha === senhaGerente) {
       return res.json({
         aceito: true,
-        token: randomUUID(),
+        token: uuid(),
       });
     } else {
       return res.json({
@@ -118,6 +172,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.listen(3333, () => {
+app.listen(8000, () => {
   console.log('http server running');
 });

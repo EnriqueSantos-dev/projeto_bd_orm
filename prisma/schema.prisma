@@ -17,15 +17,16 @@ model Posto {
   nome     String
   imgBg    String?
 
-  contem   Posto_Contem_Tipo_combustivel[]
+  tipos_combustiveis Tipo_combustivel[]
+
   abastece Posto_Abastecer_Cliente[]
 
 
 
-  gerente          Gerente @relation(fields: [gerenteIdGerente], references: [idGerente])
-  gerenteIdGerente String  @unique
+  gerente   Gerente @relation(fields: [gerenteId], references: [idGerente])
+  gerenteId String  @unique
 
-  @@map("posto")
+  @@map("postos")
 }
 
 model Tipo_combustivel {
@@ -33,24 +34,25 @@ model Tipo_combustivel {
   nome   String @unique
   valor  Float
 
-  contido Posto_Contem_Tipo_combustivel[]
 
-  @@map("tipo")
+
+  posto        Posto?  @relation(fields: [postoIdPosto], references: [idPosto])
+  postoIdPosto String?
+
+  @@map("tipos_de_combustiveis")
 }
 
 model Gerente {
-  idGerente String  @id @default(uuid())
-  cpf       String  @unique
-  login     String  @unique
+  idGerente String @id @default(uuid())
+  cpf       String @unique
+  login     String @unique
   senha     String
   nome      String
-  token     String?
+  email     String @unique
 
 
-  postos Posto?
-
-  postoIdPosto String?
-  @@map("gerente")
+  posto Posto?
+  @@map("gerentes")
 }
 
 model Cliente {
@@ -60,16 +62,7 @@ model Cliente {
 
   abastecido Posto_Abastecer_Cliente[]
 
-  @@map("cliente")
-}
-
-model Posto_Contem_Tipo_combustivel {
-  posto              Posto            @relation(fields: [postoId], references: [idPosto])
-  postoId            String
-  tipo_combustivel   Tipo_combustivel @relation(fields: [tipo_combustivelId], references: [idTipo])
-  tipo_combustivelId String
-
-  @@id([postoId, tipo_combustivelId])
+  @@map("clientes")
 }
 
 model Posto_Abastecer_Cliente {
@@ -80,5 +73,7 @@ model Posto_Abastecer_Cliente {
   valor     Float
   data      DateTime
 
+
   @@id([postoId, clienteId])
+  @@map("postos_abastecem_clientes")
 }
