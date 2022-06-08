@@ -18,7 +18,7 @@ export function PostoItem({ data }: PropsPostoItem) {
       className={`${
         data.isActive && 'border-brain-500 bg-brain-500'
       } hover:border-brain-500   bg-bgTheme-400 rounded-md border-[2px] border-bgTheme-400 p-[1px] flex flex-col gap-[2px]
-      min-w-[240px] h-[170px]
+      min-w-[240px] min-w-[280px]  h-[200px] font-semibold 
       cursor-pointer text-white`}>
       <div className='rounded-t bg-bgTheme-600 flex flex-1  items-center justify-center'>
         {data?.img ? (

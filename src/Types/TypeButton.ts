@@ -4,5 +4,5 @@ export type TypeButton = {
   color: string;
   children?: JSX.Element;
   state?: boolean;
-  animated?: boolean;
+  onClick?: () => string;
 };

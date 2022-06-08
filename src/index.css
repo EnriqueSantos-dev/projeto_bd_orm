@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:ital,wght@0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,14 +13,15 @@ html {
   font-family: 'Poppins', sans-serif;
 }
 *::-webkit-scrollbar {
-  width: 13px;
+  width: 11px !important;
 }
 ::-webkit-scrollbar-track {
   width: 2px;
   background: #18181b;
+  padding: 2px;
 }
 *::-webkit-scrollbar-thumb {
-  background: #8257e6;
+  background-color: #8257e6;
   border: 2px solid #18181b;
   border-radius: 5px;
 }

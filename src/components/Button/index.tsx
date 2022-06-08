@@ -1,18 +1,17 @@
 import { TypeButton } from '../../Types/TypeButton';
 
-export function Button({ text, color, children, animated }: TypeButton) {
+export function Button({ text, color, children }: TypeButton) {
   return (
     <div className='flex-1 flex justify-end relative'>
       <button
-        className={`peer flex items-center ease-linear transition-opacity hover:opacity-90 gap-2 rounded-md px-4 py-2 font-semibold text-base text-white capitalize  'animate-none'
-        ${animated && 'animate-wiggle'}
-        `}
+        className='group flex items-center ease-linear rounded-md px-4 py-2 font-semibold text-base text-white capitalize '
         style={{ background: `${color}` }}>
         {children && children}
+        <span className='max-w-0 max-h-6 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-linear'>
+          <span className='pl-2'></span>
+          {text}
+        </span>
       </button>
-      <span className='hidden opacity-0 absolute top-12 right-0 peer-hover:block peer-hover:opacity-100  font-semibold text-base text-white  capitalize '>
-        {text}
-      </span>
     </div>
   );
 }

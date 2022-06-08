@@ -1,5 +1,3 @@
-import { useParams } from 'react-router-dom';
-
 import { colors } from '../../helpers/colorsBasic';
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
@@ -14,8 +12,6 @@ import { FuelItem } from '../../components/Fuel';
 import { FuelHelper } from '../../Types/FuelTypeHelper';
 
 export default function PostoCombustiveis() {
-  const params = useParams();
-  const [animated, setAnimated] = useState(false);
   const [isLoadingFuels, setLoadingFuels] = useState(false);
   const [listFuels, setListFuel] = useState<FuelHelper[]>([]);
   const [disableButton, setDisableButton] = useState(true);
@@ -27,24 +23,24 @@ export default function PostoCombustiveis() {
       setListFuel([
         {
           data: {
-            name: 'teste',
-            value: 10.5,
+            name: 'gasolina',
+            value: 7.5,
             postoId: '8299f2jj9m2c9f',
           },
           isActive: false,
         },
         {
           data: {
-            name: 'teste2',
-            value: 10,
+            name: 'álcool',
+            value: 6.0,
             postoId: '8299f2jjac9f',
           },
           isActive: false,
         },
         {
           data: {
-            name: 'teste',
-            value: 10.5,
+            name: 'etanol',
+            value: 4.0,
             postoId: '8299f2jj9m2c9f',
           },
           isActive: false,
@@ -68,13 +64,8 @@ export default function PostoCombustiveis() {
     setDisableButton(false);
   };
 
-  const animatedSet = () => {
-    setAnimated(!animated);
-  };
-  setInterval(animatedSet, 10000);
-
   return (
-    <div className='p-6'>
+    <>
       <Header>
         <ButtonLink
           color={`${colors.redButton}`}
@@ -82,15 +73,15 @@ export default function PostoCombustiveis() {
           text='voltar'>
           <SettingsBackupRestoreIcon />
         </ButtonLink>
-        <Button color='#8257E6' text='Combustíveis' animated={animated}>
+        <Button color='#8257E6' text='Combustíveis'>
           <LocalGasStationIcon style={{ color: '#fff' }} />
         </Button>
       </Header>
-      <div className='max-w-[900px]  rounded-md bg-bgTheme-700 h-[480px] mx-auto my-12 px-5 py-10 flex flex-col  gap-8 '>
+      <div className='max-w-[900px]  rounded-md bg-bgTheme-700 h-[75vh] max-h[80vh] mx-auto my-12 px-5 py-10 flex flex-col  gap-8 '>
         <div className='w-full flex items-center justify-center'>
-          <h3 className='text-white font-semibold text-xl smm:text-base'>
+          <h2 className='text-white font-semibold text-xl smm:text-base'>
             Selecione o seu combustível
-          </h3>
+          </h2>
         </div>
         {isLoadingFuels ? (
           <div className='w-full flex flex-col gap-1 items-center justify-center flex-1'>
@@ -117,6 +108,6 @@ export default function PostoCombustiveis() {
           />
         </div>
       </div>
-    </div>
+    </>
   );
 }
