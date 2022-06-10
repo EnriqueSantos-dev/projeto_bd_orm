@@ -5,13 +5,15 @@ import { User } from '../models/ModelUser';
 type ContextTypeUser = {
   user: User | Gerente | null;
   setPickUser: (user: User | Gerente | null) => void;
+  authenticated?: boolean;
 };
-const initalState = {
+const initialState = {
   user: null,
   setPickUser: () => {},
+  authenticated: false,
 };
 
-export const ContextUser = createContext<ContextTypeUser>(initalState);
+export const ContextUser = createContext<ContextTypeUser>(initialState);
 
 type PropsContext = {
   children: ReactNode;
@@ -19,6 +21,7 @@ type PropsContext = {
 
 export const ContextUserProvider = ({ children }: PropsContext) => {
   const [userTest, setUserTest] = useState<User | Gerente | null>(null);
+  const [authenticated, setAuthenticated] = useState(false);
 
   const pickUser = (user: User | Gerente | null) => {
     setUserTest(user);
