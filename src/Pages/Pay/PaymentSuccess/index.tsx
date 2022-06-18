@@ -1,3 +1,10 @@
+import React, { useEffect } from 'react';
+
+import { useAppSelector, useAppDispatch } from '../../../hooks/selectRedxu';
+
+import Swal from 'sweetalert2';
+import 'sweetalert2/src/sweetalert2.scss';
+
 import succesIcon from '../../../assets/success.svg';
 import HomeIcon from '@mui/icons-material/Home';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -5,6 +12,16 @@ import { ButtonLink } from '../../../components/ButtonLink';
 import { colors } from '../../../helpers/colorsBasic';
 
 export default function PaymentSuccess() {
+  useEffect(() => {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Pagamento concluído com sucesso',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  }, []);
+
   return (
     <div className='flex flex-col gap-5 items-center p-8 text-white bg-bgTheme-800 max-w-[386px] mx-auto mt-10 rounded-md'>
       <div className='p-2 flex items-center font-semibold gap-3'>

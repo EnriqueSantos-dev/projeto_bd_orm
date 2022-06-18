@@ -1,4 +1,7 @@
 import { colors } from '../../helpers/colorsBasic';
+import { setPickFuel } from '../../redux/reducers/clientSlice';
+import { useDispatch } from 'react-redux';
+
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
@@ -16,6 +19,8 @@ export default function PostoCombustiveis() {
   const [listFuels, setListFuel] = useState<FuelHelper[]>([]);
   const [disableButton, setDisableButton] = useState(true);
 
+  const dispatch = useDispatch();
+
   // teste para estilizar
   useEffect(() => {
     const loadFuels = async () => {
@@ -25,7 +30,7 @@ export default function PostoCombustiveis() {
           data: {
             name: 'gasolina',
             value: 7.5,
-            postoId: '8299f2jj9m2c9f',
+            id: '8299f2jj9m2c9f',
           },
           isActive: false,
         },
@@ -33,7 +38,7 @@ export default function PostoCombustiveis() {
           data: {
             name: 'álcool',
             value: 6.0,
-            postoId: '8299f2jjac9f',
+            id: '8299f2jjac9f',
           },
           isActive: false,
         },
@@ -41,7 +46,7 @@ export default function PostoCombustiveis() {
           data: {
             name: 'etanol',
             value: 4.0,
-            postoId: '8299f2jj9m2c9f',
+            id: '8299f2jj9m2c9f',
           },
           isActive: false,
         },
@@ -62,6 +67,7 @@ export default function PostoCombustiveis() {
     });
     setListFuel(templistFuels);
     setDisableButton(false);
+    dispatch(setPickFuel(item.data.id));
   };
 
   return (

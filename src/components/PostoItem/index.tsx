@@ -2,13 +2,19 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Postotype } from '../../Types/Postotype';
 
+import { setPickGasStation } from '../../redux/reducers/clientSlice';
+import { useDispatch } from 'react-redux';
+
 type PropsPostoItem = {
   data: Postotype;
 };
 
 export function PostoItem({ data }: PropsPostoItem) {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const handleClickPosto = (id: string) => {
+    dispatch(setPickGasStation(id));
     navigate(`/posto/${id}`);
   };
 

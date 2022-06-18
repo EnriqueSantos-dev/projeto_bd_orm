@@ -19,18 +19,8 @@ export default function Home() {
               <p>Quem você é ?</p>
             </div>
             <div className='flex gap-10 flex-wrap justify-center items-center'>
-              <ButtonLink
-                color='#1E5FC1'
-                text='cliente'
-                action='/postos'
-                onClick={() => 'cliente'}
-              />
-              <ButtonLink
-                color='#1E9F88'
-                text='colaborador'
-                action='/login'
-                onClick={() => 'colaborador'}
-              />
+              <ButtonLink color='#1E5FC1' text='cliente' action='/postos' />
+              <ButtonLink color='#1E9F88' text='colaborador' action='/login' />
             </div>
           </div>
         </div>

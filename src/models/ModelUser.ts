@@ -23,13 +23,6 @@ export class User extends Client {
     let resp = await fetch('https://jsonplaceholder.typicode.com/albums');
     let data = await resp.json();
     return data;
-    return {
-      /* name: this.name,
-      cpf: this.cpf,
-      pickPosto: this.pickGasStation,
-      pickFuel: this.pickFuel,
-      valueSuplly: this.valueSupply, */
-    };
   };
 
   payment = async (): Promise<void> => {

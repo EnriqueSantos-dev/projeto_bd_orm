@@ -1,4 +1,5 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Postotype } from '../../Types/Postotype';
 import { colors } from '../../helpers/colorsBasic';
@@ -11,14 +12,10 @@ import { Button } from '../../components/Button';
 import { PostoItem } from '../../components/PostoItem';
 import { Loading } from '../../components/Loading';
 import Header from '../../components/Header';
-import { ContextUser } from '../../contexts/Context';
 
 export default function Postos() {
   const [postos, setPostos] = useState<Postotype[]>([]);
   const [isLoading, setLoading] = useState(false);
-
-  const { user } = useContext(ContextUser);
-  console.log(user);
 
   useEffect(() => {
     loadPostos();
