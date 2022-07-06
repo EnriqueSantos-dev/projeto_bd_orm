@@ -3,7 +3,10 @@ import express from 'express';
 
 import { v4 as uuid } from 'uuid';
 
+const cors = require('cors');
+
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.get('/postos', async (req, res) => {
@@ -11,6 +14,38 @@ app.get('/postos', async (req, res) => {
     const data = await prisma.posto.findMany();
     return res.status(200).json(data);
   } catch (error) {}
+});
+
+app.post('/cliente/pagamento', async (req, res) => {
+  const { name, cpf, valueSupply, pickGasStation } = req.body;
+  try {
+    //create client
+    const { idCliente } = await prisma.cliente.create({
+      select: {
+        idCliente: true
+      },
+      data: {
+        nome: name,
+        cpf
+      }
+    });
+
+    //relation client/posto
+    const createRelation = await prisma.posto_Abastecer_Cliente.create({
+      data: {
+        clienteId: idCliente,
+        data: new Date(),
+        postoId: pickGasStation,
+        valor: valueSupply
+      }
+    });
+
+    return res.status(201).json({
+      create: true
+    });
+  } catch (error) {
+    return res.send(error);
+  }
 });
 
 app.get('/postos/:id', async (req, res) => {
@@ -23,13 +58,13 @@ app.get('/postos/:id', async (req, res) => {
           select: {
             idTipo: true,
             nome: true,
-            valor: true,
-          },
-        },
+            valor: true
+          }
+        }
       },
       where: {
-        idPosto: id,
-      },
+        idPosto: id
+      }
     });
     return res.status(200).json({ data });
   } catch (error) {}
@@ -45,8 +80,8 @@ app.post('/gerente/cadastro', async (req, res) => {
         cpf,
         login,
         senha,
-        email,
-      },
+        email
+      }
     });
     return res.status(201).json(data);
   } catch (error) {
@@ -67,8 +102,8 @@ app.post('/gerente/adim', async (req, res) => {
         nome,
         cnpj,
         endereco,
-        gerenteId: id,
-      },
+        gerenteId: id
+      }
     });
     return res.status(201).json({ DadosDoPosto: data });
   } catch (error) {
@@ -83,19 +118,19 @@ app.put('/gerente/perfil', async (req, res) => {
     const data = await prisma.gerente.update({
       select: {
         nome: true,
-        cpf: true,
+        cpf: true
       },
       where: {
-        idGerente: id,
+        idGerente: id
       },
       data: {
         nome: novoNome,
-        cpf: novoCPF,
-      },
+        cpf: novoCPF
+      }
     });
     return res.status(200).json({
       status: 'Dados alterados com sucesso',
-      data: data,
+      data: data
     });
   } catch (error) {
     if (res.statusCode === 2002) {
@@ -110,7 +145,7 @@ app.post('/gerente/create/combustivel', async (req, res) => {
   try {
     const data = await prisma.tipo_combustivel.create({
       select: { idTipo: true, nome: true, valor: true },
-      data: { nome, valor: parseFloat(valor), postoIdPosto: idPosto },
+      data: { nome, valor: parseFloat(valor), postoIdPosto: idPosto }
     });
     return res.status(201).json(data);
   } catch (error) {
@@ -131,14 +166,14 @@ app.post('/pagamento', async (req, res) => {
         clienteId: idCliente,
         postoId: idPosto,
         valor: valueAbastecimento,
-        data: new Date(),
-      },
+        data: new Date()
+      }
     });
     return res.status(200).json({ message: 'pagamento concluído' });
   } catch (error) {
     return res.json({
       error: error,
-      message: 'Deu algum problema no pagamento',
+      message: 'Deu algum problema no pagamento'
     });
   }
 });
@@ -150,21 +185,21 @@ app.post('/login', async (req, res) => {
     const data = await prisma.gerente.findUnique({
       select: {
         login: true,
-        senha: true,
+        senha: true
       },
       where: {
-        login: loginGerente,
-      },
+        login: loginGerente
+      }
     });
     if (data?.login === loginGerente && data?.senha === senhaGerente) {
       return res.json({
         aceito: true,
-        token: uuid(),
+        token: uuid()
       });
     } else {
       return res.json({
         aceito: false,
-        message: 'O usuário ou senha estão incorretos',
+        message: 'O usuário ou senha estão incorretos'
       });
     }
   } catch (error) {
@@ -172,6 +207,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.listen(8000, () => {
+app.listen(3333, () => {
   console.log('http server running');
 });
