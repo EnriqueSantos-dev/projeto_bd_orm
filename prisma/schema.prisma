@@ -21,11 +21,6 @@ model Posto {
 
   abastece Posto_Abastecer_Cliente[]
 
-
-
-  gerente   Gerente @relation(fields: [gerenteId], references: [idGerente])
-  gerenteId String  @unique
-
   @@map("postos")
 }
 
@@ -40,19 +35,6 @@ model Tipo_combustivel {
   postoIdPosto String?
 
   @@map("tipos_de_combustiveis")
-}
-
-model Gerente {
-  idGerente String @id @default(uuid())
-  cpf       String @unique
-  login     String @unique
-  senha     String
-  nome      String
-  email     String @unique
-
-
-  posto Posto?
-  @@map("gerentes")
 }
 
 model Cliente {

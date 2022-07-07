@@ -1,11 +1,11 @@
-import { Client } from '../I-strategy';
+import { StrategyClient } from '../I-strategy';
 
 export class ContextPayment {
-  private strategy: Client | null = null;
+  private strategy: StrategyClient | null = null;
   constructor() {}
 
-  public setStrategy = (client: Client): void => {
-    this.strategy = client;
+  public setStrategy = (strategy: StrategyClient): void => {
+    this.strategy = strategy;
   };
 
   public executeStrategy = (value: number): number => {
