@@ -29,9 +29,9 @@ export const createPosto = async (req: Request, res: Response) => {
   const params = req.body;
 
   try {
-    const data = await PostoService.create(params);
+    await PostoService.create(params);
 
-    return res.status(201).json(data);
+    return res.status(201).end();
   } catch ({ message }) {
     res.status(500).json({ message });
   }
