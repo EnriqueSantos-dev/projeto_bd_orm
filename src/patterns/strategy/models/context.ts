@@ -1,4 +1,4 @@
-import { StrategyClient } from '../I-strategy';
+import { StrategyClient } from '../Interfaces/Strategy';
 
 export class ContextPayment {
   private strategy: StrategyClient | null = null;
@@ -10,7 +10,7 @@ export class ContextPayment {
 
   public executeStrategy = (value: number): number => {
     if (this.strategy) {
-      return this.strategy.paymentStrategy(value);
+      return Number(this.strategy.paymentStrategy(value));
     }
     throw new Error('Set strategy is necessary');
   };

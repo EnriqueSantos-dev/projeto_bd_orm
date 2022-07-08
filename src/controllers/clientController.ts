@@ -19,10 +19,13 @@ export const createClient = async (req: Request, res: Response) => {
   }
 
   const valueDescontWitchStrategy = contextClientPayment.executeStrategy(
-    client.valueSuplly
+    client.valueSupply
   );
 
-  const newClient = { ...client, valueSupply: valueDescontWitchStrategy };
+  const newClient = {
+    ...client,
+    valueSupply: valueDescontWitchStrategy
+  };
 
   const data = await ClientService.create(newClient);
 

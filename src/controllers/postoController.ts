@@ -13,3 +13,26 @@ export const getFuelsPosto = async (req: Request, res: Response) => {
 
   return res.json(data);
 };
+
+export const createFuelType = async (req: Request, res: Response) => {
+  const params = req.body;
+
+  try {
+    const data = await PostoService.createFuel(params);
+    return res.status(201).json(data);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+};
+
+export const createPosto = async (req: Request, res: Response) => {
+  const params = req.body;
+
+  try {
+    const data = await PostoService.create(params);
+
+    return res.status(201).json(data);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+};

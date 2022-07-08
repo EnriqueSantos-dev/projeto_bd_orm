@@ -26,7 +26,7 @@ model Posto {
 
 model Tipo_combustivel {
   idTipo String @id @default(uuid())
-  nome   String @unique
+  nome   String
   valor  Float
 
 
@@ -56,6 +56,6 @@ model Posto_Abastecer_Cliente {
   data      DateTime
 
 
-  @@id([postoId, clienteId])
+  @@id([postoId, clienteId, data])
   @@map("postos_abastecem_clientes")
 }
