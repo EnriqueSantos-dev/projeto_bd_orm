@@ -5,8 +5,6 @@ import Header from '../../components/Header';
 import { colors } from '../../helpers/colorsBasic';
 import PersonIcon from '@mui/icons-material/Person';
 
-import { UserDetails } from '../../components/SignupForm/UserDetails';
-
 import LoginIcon from '@mui/icons-material/Login';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
@@ -26,7 +24,7 @@ type FormInputs = {
 
 export function SignUp() {
   const { handleSubmit, control } = useForm<FormInputs>({
-    resolver: yupResolver(schemaLogin),
+    resolver: yupResolver(schemaLogin)
   });
 
   const onSubmit = (data: FormInputs) => console.log(data.userName);
@@ -56,7 +54,7 @@ export function SignUp() {
               name='userName'
               render={({
                 field: { name, onChange },
-                fieldState: { error },
+                fieldState: { error }
               }) => (
                 <Input
                   onChange={onChange}
@@ -76,7 +74,7 @@ export function SignUp() {
               name='password'
               render={({
                 field: { name, onChange },
-                fieldState: { error },
+                fieldState: { error }
               }) => (
                 <Input
                   onChange={onChange}
@@ -95,7 +93,7 @@ export function SignUp() {
               name='confirmPassword'
               render={({
                 field: { name, onChange },
-                fieldState: { error },
+                fieldState: { error }
               }) => (
                 <Input
                   onChange={onChange}
