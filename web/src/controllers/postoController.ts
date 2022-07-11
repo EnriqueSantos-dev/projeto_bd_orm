@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { IClient } from '../models/ClientModel';
 import { PostoService } from '../services/PostoService';
 
 export const all = async (req: Request, res: Response) => {
@@ -34,5 +35,23 @@ export const createPosto = async (req: Request, res: Response) => {
     return res.status(201).end();
   } catch ({ message }) {
     res.status(500).json({ message });
+  }
+};
+
+export const getAllSalesUniqueClient = async (req: Request, res: Response) => {
+  const client: Omit<IClient, 'valueSupply' | 'type' | 'name'> = req.body;
+  req.body;
+  try {
+    const { data } = await PostoService.getSalesClient(
+      client.cpf,
+      client.postoId
+    );
+    const clientResponse = {
+      cliente: client.cpf,
+      sales: data
+    };
+    return res.status(200).json(clientResponse);
+  } catch (error) {
+    return res.status(200).json({ error: error });
   }
 };

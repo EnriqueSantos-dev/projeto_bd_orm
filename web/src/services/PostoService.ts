@@ -69,5 +69,29 @@ export const PostoService = {
         'Por algum motivo desconhecido a operação não foi concluída'
       );
     }
+  },
+  getSalesClient: async (cpf: string, postoId: string) => {
+    try {
+      const data = await prisma.posto_Abastecer_Cliente.findMany({
+        select: {
+          postoId: true,
+          valor: true,
+          data: true
+        },
+        where: {
+          postoId,
+          cliente: {
+            cpf
+          }
+        }
+      });
+
+      return { data };
+    } catch (error) {
+      if (error instanceof PrismaErros) {
+        if (error.code === 'P2001') return { error: 'cliente não encontrado' };
+      }
+      return { error: error };
+    }
   }
 };

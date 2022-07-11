@@ -29,5 +29,8 @@ export const createClient = async (req: Request, res: Response) => {
 
   const data = await ClientService.create(newClient);
 
-  return res.json(data);
+  if (data.create) return res.status(201).json({ create: data.create });
+  if (data.status) return res.status(200).json({ status: data.status });
+
+  return res.status(200).json({ error: data.error });
 };

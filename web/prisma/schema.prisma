@@ -10,6 +10,7 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+//@decorator
 model Posto {
   idPosto  String  @id @default(uuid())
   cnpj     String  @unique
@@ -29,8 +30,6 @@ model Tipo_combustivel {
   nome   String
   valor  Float
 
-
-
   posto        Posto?  @relation(fields: [postoIdPosto], references: [idPosto])
   postoIdPosto String?
 
@@ -43,7 +42,6 @@ model Cliente {
   nome      String
 
   abastecido Posto_Abastecer_Cliente[]
-
   @@map("clientes")
 }
 

@@ -7,6 +7,7 @@ export const router = Router();
 
 router.get('/postos', PostoController.all);
 router.get('/posto/:id', PostoController.getFuelsPosto);
+router.get('/sales', PostoController.getAllSalesUniqueClient);
 router.post('/posto/:id/criar-combustivel', PostoController.createFuelType);
 router.post('/posto/criar-posto', PostoController.createPosto);
 
