@@ -16,6 +16,6 @@
 <br/>
 <div align="center">🚀 <strong>"http server running"</strong></div>
 <br/>
-Se tudo ocorreu o o texto acima será mostrado no seu terminal, após isso pode executar suas requisições a vontade.
+Se tudo ocorreu bem o texto acima será mostrado no seu terminal, após isso pode executar suas requisições a vontade.
 
 
