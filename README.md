@@ -6,7 +6,7 @@
 
 1. Clone o repositório em sua máquina.
    <code>git clone https://github.com/EnriqueSantos-dev/projeto_bd_orm</code>
-2. Navegue a até a pasta onde foi clonado o repositório.
+2. Navegue até a pasta onde foi clonado o repositório.
    <code>cd "projeto_bd_orm/web"</code>
 3. Dentro da pasta execute o comando abaixo para executar o server.
    <code>npm run dev</code>
